@@ -1,4 +1,4 @@
-{% extends '_base.html' %} {% block content %}
+{% extends '_base.html' %} {% load crispy_forms_tags %} {% block content %}
 <div class="row">
   <div class="col-8">
     {% for link in links %}
@@ -15,7 +15,17 @@
     {% endfor %}
   </div>
   <div class="col-3">
-    <h4>Form</h4>
+    <h4>Create a new link-post</h4>
+    {% if user.is_authenticated %}
+    <form method="post">
+      {{ link_post_form | crispy }} {% csrf_token %}
+      <button class="btn btn-primary" type="submit">
+        Create a new link-post
+      </button>
+    </form>
+    {% else %}
+    <h5>Please log-in using link in header</h5>
+    {% endif %}
   </div>
 </div>
 {% endblock content %}

@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.github',
+    'crispy_forms',
 
     # Local apps
     'home.apps.HomeConfig',
@@ -158,3 +159,5 @@ AUTHENTICATION_BACKENDS = [
 LOGIN_REDIRECT_URL = 'home:homepage'
 ACCOUNT_LOGOUT_URL = 'home:homepage'
 ACCOUNT_LOGOUT_ON_GET = True
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
