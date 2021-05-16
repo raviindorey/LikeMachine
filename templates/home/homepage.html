@@ -1,5 +1,21 @@
-{% extends '_base.html' %}
-
-{% block content %}
-<h1>Hello, World!</h1>
+{% extends '_base.html' %} {% block content %}
+<div class="row">
+  <div class="col-8">
+    {% for link in links %}
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">{{ link.title }}</h5>
+        <h6 class="card-subtitle mb-2 text-muted">{{ link.link }}</h6>
+        <br />
+        <figcaption class="blockquote-footer">
+          Created on {{ link.created }} by {{ link.author }}
+        </figcaption>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  <div class="col-3">
+    <h4>Form</h4>
+  </div>
+</div>
 {% endblock content %}

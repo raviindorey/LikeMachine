@@ -1,5 +1,10 @@
 from django.shortcuts import render
 
+from .models import LinkPost
+
 
 def home(request):
-    return render(request, 'home/homepage.html')
+    links = LinkPost.objects.all()
+    return render(request, 'home/homepage.html', {
+        'links': links
+    })
