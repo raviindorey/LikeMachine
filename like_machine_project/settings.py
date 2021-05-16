@@ -38,6 +38,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+
+    # 3rd party
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.github',
 
     # Local apps
     'home.apps.HomeConfig',
@@ -139,3 +146,15 @@ STATICFILES_DIRS = [
 ]
 
 AUTH_USER_MODEL = 'users.CustomUser'
+
+SITE_ID = 1
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+# Allauth config
+LOGIN_REDIRECT_URL = 'home:homepage'
+ACCOUNT_LOGOUT_URL = 'home:homepage'
+ACCOUNT_LOGOUT_ON_GET = True
