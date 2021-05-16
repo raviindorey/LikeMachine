@@ -1,3 +1,9 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import LinkPost
+
+
+@admin.register(LinkPost)
+class LinkPostAdmin(admin.ModelAdmin):
+    list_display = ('title', 'created', 'link')
+    search_fields = ('title', 'link')
