@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.validators import MinValueValidator
 from django.contrib.auth import get_user_model
 
 
@@ -12,7 +13,9 @@ class LinkPost(models.Model):
     link = models.URLField()
     created = models.DateTimeField(auto_now_add=True)
     liked_by = models.ManyToManyField(get_user_model(), related_name='likes')
-    total_likes = models.PositiveIntegerField()
+    total_likes = models.PositiveIntegerField(
+        default=0, validators=[MinValueValidator(0)]
+    )
 
     class Meta:
         ordering = ('-created',)
