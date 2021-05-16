@@ -41,6 +41,7 @@ INSTALLED_APPS = [
 
     # Local apps
     'home.apps.HomeConfig',
+    'users.apps.UsersConfig',
 ]
 
 MIDDLEWARE = [
@@ -136,3 +137,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 STATICFILES_DIRS = [
     BASE_DIR / 'static'
 ]
+
+AUTH_USER_MODEL = 'users.CustomUser'
