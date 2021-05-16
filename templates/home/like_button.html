@@ -1,0 +1,7 @@
+{% if user.is_authenticated %}
+<form action="{% url 'home:like_link_post' link.id %}" method="post">
+  {% if link not in user_likes %}
+  <button class="btn btn-success" type="submit">Like</button>
+  {% endif %} {% csrf_token %}
+</form>
+{% endif %}
