@@ -12,7 +12,7 @@
         </figcaption>
         <!-- include ajax button -->
         {% include 'home/like_button.html' %}
-        <p>Total likes: {{ link.total_likes }}</p>
+        <p>Total likes: <span class="likes-count" id="likes-count-{{ link.id }}">{{ link.total_likes }}</span></p>
       </div>
     </div>
     {% endfor %}

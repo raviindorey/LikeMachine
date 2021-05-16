@@ -12,6 +12,11 @@
       integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x"
       crossorigin="anonymous"
     />
+    <script
+      src="https://code.jquery.com/jquery-3.6.0.min.js"
+      integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+      crossorigin="anonymous"
+    ></script>
     <title>{% block title %}Like Machine{% endblock title %}</title>
   </head>
   <body>
@@ -48,7 +53,10 @@
               <a
                 class="btn btn-outline-secondary"
                 href="{% provider_login_url 'github' %}"
-                ><img style="width: 20px;" src="{% static 'images/GitHub-Mark-64px.png' %}"/>GitHub Login</a
+                ><img
+                  style="width: 20px"
+                  src="{% static 'images/GitHub-Mark-64px.png' %}"
+                />GitHub Login</a
               >
               {% endif %}
             </div>

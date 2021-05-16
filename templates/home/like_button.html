@@ -1,7 +1,66 @@
 {% if user.is_authenticated %}
-<form action="{% url 'home:like_link_post' link.id %}" method="post">
-  {% if link not in user_likes %}
-  <button class="btn btn-success" type="submit">Like</button>
-  {% endif %} {% csrf_token %}
-</form>
+<button
+  href="#"
+  class="like-button"
+  id="{{ link.id }}"
+  data-id="{{ link.id }}"
+  data-action="{% if link in user_likes %}un{% endif %}like"
+>
+  {% if link in user_likes %} Unlike {% else %} Like {% endif %}
+</button>
 {% endif %}
+
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+<script>
+  var csrftoken = Cookies.get('csrftoken');
+  function csrfSafeMethod(method) {
+    // these methods don't need csrf protection
+    return /^(GET | HEAD | OPTIONS | TRACE)$/.test(method);
+  }
+  $.ajaxSetup({
+    beforeSend: function (xhr, settings) {
+      if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+        xhr.setRequestHeader('X-CSRFToken', csrftoken);
+      }
+    },
+  });
+</script>
+
+<script>
+  $('button.like-button').click(function (e) {
+    e.stopImmediatePropagation();
+    e.preventDefault();
+    $.post(
+      '{% url "home:like_link_post" %}',
+      {
+        id: $(this).data('id'),
+        action: $(this).data('action'),
+      },
+      function (data) {
+        if (data['status'] == 'ok') {
+          var link_post_id = data['link_post_id'];
+          var link_post_id_selector = '#' + link_post_id;
+          var previous_action = $(link_post_id_selector).data('action');
+          // update DOM
+          $(link_post_id_selector).data(
+            'action',
+            previous_action == 'like' ? 'unlike' : 'like'
+          );
+          $(link_post_id_selector).text(
+            previous_action == 'like' ? 'Unlike' : 'Like'
+          );
+
+          // change likes count
+          var previous_likes_count = parseInt(
+            $('#likes-count-' + link_post_id).text()
+          );
+          $('#likes-count-' + link_post_id).text(
+            previous_action == 'like'
+              ? previous_likes_count + 1
+              : previous_likes_count - 1
+          );
+        }
+      }
+    );
+  });
+</script>
