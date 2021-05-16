@@ -11,6 +11,8 @@ class LinkPost(models.Model):
     title = models.CharField(max_length=300)
     link = models.URLField()
     created = models.DateTimeField(auto_now_add=True)
+    liked_by = models.ManyToManyField(get_user_model(), related_name='likes')
+    total_likes = models.PositiveIntegerField()
 
     class Meta:
         ordering = ('-created',)

@@ -10,6 +10,13 @@
         <figcaption class="blockquote-footer">
           Created on {{ link.created }} by {{ link.author }}
         </figcaption>
+        {% if user.is_authenticated %}
+        <form action="{% url 'home:like_link_post' link.id %}" method="post">
+          {% csrf_token %}
+          <button class="btn btn-success" type="submit">Like</button>
+        </form>
+        {% endif %}
+        <p>Total likes: {{ link.total_likes }}</p>
       </div>
     </div>
     {% endfor %}

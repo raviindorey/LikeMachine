@@ -1,4 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
+from django.views.decorators.http import require_POST
+from django.contrib.auth.decorators import login_required
 
 from .models import LinkPost
 from .forms import LinkPostForm
@@ -18,3 +20,13 @@ def home(request):
         'links': links,
         'link_post_form': link_post_form,
     })
+
+
+@login_required
+@require_POST
+def like_link_post(request, link_post_id):
+    link_post = get_object_or_404(LinkPost, id=link_post_id)
+    link_post.total_likes += 1
+    link_post.liked_by.add(request.user)
+    link_post.save()
+    return redirect('home:homepage')
