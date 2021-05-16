@@ -1,7 +1,7 @@
 {% if user.is_authenticated %}
 <button
   href="#"
-  class="like-button"
+  class="like-button btn btn-outline-{% if link in user_likes %}danger{% else %}success{% endif %}"
   id="{{ link.id }}"
   data-id="{{ link.id }}"
   data-action="{% if link in user_likes %}un{% endif %}like"
@@ -49,6 +49,13 @@
           $(link_post_id_selector).text(
             previous_action == 'like' ? 'Unlike' : 'Like'
           );
+          if(previous_action == 'like'){
+            $(link_post_id_selector).removeClass('btn-outline-primary')
+            $(link_post_id_selector).addClass('btn-outline-danger')
+          } else {
+            $(link_post_id_selector).addClass('btn-outline-primary')
+            $(link_post_id_selector).removeClass('btn-outline-danger')
+          }
 
           // change likes count
           var previous_likes_count = parseInt(
