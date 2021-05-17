@@ -1,7 +1,9 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render
 from django.views.decorators.http import require_POST
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
+from django.db.models import DateField
+from django.db.models.functions import Trunc
 
 from common.decorators import ajax_required
 
@@ -10,7 +12,10 @@ from .forms import LinkPostForm
 
 
 def home(request):
-    links = LinkPost.objects.all()
+    links = LinkPost.objects.annotate(
+        day_created=Trunc('created', 'day', output_field=DateField()))\
+        .order_by('-day_created', '-total_likes')
+
     if request.method == 'POST':
         link_post_form = LinkPostForm(request.POST)
         if link_post_form.is_valid():
