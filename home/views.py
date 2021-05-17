@@ -59,3 +59,24 @@ def like_link_post(request):
         except LinkPost.DoesNotExist:
             return JsonResponse({'status': 'ko'})
     return JsonResponse({'status': 'ko'})
+
+
+@ajax_required
+@require_POST
+@login_required
+def delete_link_post(request):
+    link_post_id = request.POST.get('id')
+    action = request.POST.get('action')
+    if link_post_id and action:
+        try:
+            link_post = LinkPost.objects.get(id=link_post_id)
+            if action == 'delete':
+                if link_post.author == request.user:
+                    link_post.delete()
+            return JsonResponse({
+                'status': 'ok',
+                'link_post_id': link_post_id
+            })
+        except LinkPost.DoesNotExist:
+            return JsonResponse({'status': 'ko'})
+    return JsonResponse({'status': 'ko'})
