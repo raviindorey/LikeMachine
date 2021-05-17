@@ -5,14 +5,23 @@
     <div class="card">
       <div class="card-body">
         <h5 class="card-title">{{ link.title }}</h5>
-        <h6 class="card-subtitle mb-2 text-muted">{{ link.link }}</h6>
+        <h6 class="card-subtitle mb-2 text-muted">
+          <a href="{{ link.link }}" target="_blank" rel="noopener noreferrer"
+            >{{ link.link }}</a
+          >
+        </h6>
         <br />
         <figcaption class="blockquote-footer">
           Created on {{ link.created }} by {{ link.author }}
         </figcaption>
         <!-- include ajax button -->
         {% include 'home/like_button.html' %}
-        <p>Total likes: <span class="likes-count" id="likes-count-{{ link.id }}">{{ link.total_likes }}</span></p>
+        <p>
+          Total likes:
+          <span class="likes-count" id="likes-count-{{ link.id }}"
+            >{{ link.total_likes }}</span
+          >
+        </p>
       </div>
     </div>
     {% endfor %}
