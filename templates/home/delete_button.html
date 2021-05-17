@@ -1,0 +1,33 @@
+{% if link.author == user %}
+<button
+  href="#"
+  class="delete-button btn btn-outline-danger"
+  id="{{ link.id }}"
+  data-id="{{ link.id }}"
+  data-action="delete"
+>
+  Delete Post
+</button>
+{% endif %}
+
+<script>
+  $('button.delete-button').click(function (e) {
+    e.stopImmediatePropagation();
+    e.preventDefault();
+    $.post(
+      '{% url "home:delete_link_post" %}',
+      {
+        id: $(this).data('id'),
+        action: $(this).data('action'),
+      },
+      function (data) {
+        if (data['status'] == 'ok') {
+          var link_post_id = data['link_post_id'];
+          var link_post_id_selector = '#card-' + link_post_id;
+          // update DOM
+          $(link_post_id_selector).remove();
+        }
+      }
+    );
+  });
+</script>
